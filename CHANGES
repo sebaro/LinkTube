@@ -1,0 +1,54 @@
+
+
+/* LinkTube Changelog */
+
+
+#2014.06.22
+Adds support vor VK embedded videos with iframe.
+
+#2014.03.21
+Adds support for videos embedded with Embed.
+
+#2014.01.16
+Fixes support for YouTube embedded playlists.
+
+#2013.10.27
+Adds the downloadURL and updateURL metadata.
+
+#2013.06.17
+Adds support for FunnyOrDie embedded videos with iframe.
+
+#2013.05.23
+Adds support for MetaCafe embedded videos with iframe and object.
+Adds support for alternative Dailymotion embedded videos with object.
+
+#2013.05.22
+Adds support for Blip embedded videos with iframe.
+
+#2013.05.01
+Adds support for YouTube embedded playlist.
+All links are secure now, but they can be changed with the inner script 'secure' option.
+
+#2012.09.12
+Adds support for Dailymotion embedded videos with iframe and object.
+
+#2012.02.12
+Fixed for videos embedded with param's attribute name="src" not name="movie".
+
+#2012.02.06
+Fixes Vimeo links.
+
+#2012.02.05
+Uses secured (https) links for YouTube.
+
+#2012.02.02
+Adds support for youtube-nocookie.com.
+
+#2011.12.01
+Fixes YouTube embedded videos and adds support for Vimeo embedded videos.
+
+#2011.11.28
+Replaces all YouTube videos embedded with iframe or object.
+
+#2011.11.26
+Should work with YouTube videos embedded with iframe.
