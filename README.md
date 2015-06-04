@@ -1,9 +1,9 @@
 
 LinkTube is a browser user script that replaces embedded videos with a link to the video page.
 
-LinkTube: video link
-LinkTube+: + video title for YouTube
-LinkTube++: + video streams for YouTube
+LinkTube: video link  
+LinkTube+: + video title for YouTube  
+LinkTube++: + video streams for YouTube  
 
 ![](https://raw.github.com/sebaro/LinkTube/master/screenshot.png)
 
