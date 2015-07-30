@@ -1,9 +1,10 @@
 // ==UserScript==
-// @name		LinkTube++
-// @version		2015.06.03
+// @name		LinkTube
+// @version		2015.07.30
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
 // @namespace		http://isebaro.com/linktube
+// @license		GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
 // @downloadURL		https://raw.githubusercontent.com/sebaro/linktube/master/linktubeplusplus.user.js
 // @updateURL		https://raw.githubusercontent.com/sebaro/linktube/master/linktubeplusplus.user.js
 // @icon		http://s3.amazonaws.com/uso_ss/icon/119244/large.png
@@ -13,7 +14,7 @@
 
 
 /*
-  
+
   Copyright (C) 2011 - 2015 Sebastian Luncan
 
   This program is free software: you can redistribute it and/or modify
@@ -28,10 +29,10 @@
 
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <http://www.gnu.org/licenses/>.
-  
+
   Website: http://isebaro.com/linktube
   Contact: http://isebaro.com/contact
-  
+
 */
 
 
@@ -78,7 +79,7 @@ function getMyElement (element, get, tag) {
   else if (get == 'children') obj = element.getElementsByTagName(tag);
   return obj;
 }
-  
+
 function modifyMyElement (obj, type, content, clear) {
   if (type == 'div') {
     if (content) obj.innerHTML = content;
@@ -269,7 +270,7 @@ function YouTube (url, target) {
     url: url,
     onload: function(response) {
       if (response.readyState === 4 && response.status === 200) {
-	
+
 	/* Get Page Source */
 	ytPageSource = response.responseText;
 
@@ -288,7 +289,7 @@ function YouTube (url, target) {
 	  ytVideoTitle = ytVideoTitle.replace(/^\s+|\s+$/, '').replace(/\.+$/g, '');
 	  ytVideoTitle = ytVideoTitle.replace(/^YouTube\s-\s/, '');
 	}
-	
+
 	/* Get Video Length */
 	ytVideoLength = ytPageSource.match(/meta\s+itemprop="duration"\s+content="(.*?)"/);
 	ytVideoLength = (ytVideoLength) ? ytVideoLength[1].replace('PT', '').replace('M', ':').replace('S', '') : null;
@@ -306,7 +307,7 @@ function YouTube (url, target) {
 	}
 	if (ytVideosAdaptiveFmts) {
 	  ytVideosAdaptiveFmts = ytVideosAdaptiveFmts.replace(/clen=\d+&/g, '').replace(/&clen=\d+/g, '');
-	  ytVideosAdaptiveFmts = ytVideosAdaptiveFmts.replace(/lmt=\d+&/g, '').replace(/&lmt=\d+/g, ''); 
+	  ytVideosAdaptiveFmts = ytVideosAdaptiveFmts.replace(/lmt=\d+&/g, '').replace(/&lmt=\d+/g, '');
 	  if (ytVideosContent) ytVideosContent += ',' + ytVideosAdaptiveFmts;
 	  else ytVideosContent = ytVideosAdaptiveFmts;
 	}
@@ -428,7 +429,7 @@ function embedMyLinks (element) {
       }
     }
   }
-  
+
 }
 
 
@@ -445,8 +446,8 @@ var linkParsers = [
   {'source': 'vimeo.com/video/', 'pattern': '/video/(.*?)(\\?|&|$)', 'link': 'https://vimeo.com/'},
   {'source': 'vimeo.com/moogaloop', 'pattern': '/moogaloop.swf\\?clip_id=(.*?)(&|$)', 'link': 'https://vimeo.com/'},
   {'source': 'metacafe.com/embed/', 'pattern': '/embed/(.*?)/', 'link': 'https://metacafe.com/watch/'},
-  {'source': 'metacafe.com/fplayer/', 'pattern': '/fplayer/(.*?)/', 'link': 'https://metacafe.com/watch/'}, 
-  {'source': 'funnyordie.com/embed/', 'pattern': '/embed/(.*?)$', 'link': 'https://funnyordie.com/videos/'}, 
+  {'source': 'metacafe.com/fplayer/', 'pattern': '/fplayer/(.*?)/', 'link': 'https://metacafe.com/watch/'},
+  {'source': 'funnyordie.com/embed/', 'pattern': '/embed/(.*?)$', 'link': 'https://funnyordie.com/videos/'},
   {'source': 'blip.tv/play/', 'pattern': '/play/(.*?)$', 'link': 'https://blip.tv/players/episode/'},
   {'source': 'vk.com/video', 'pattern': 'video_ext.php\\?(.*?)$', 'link': 'http://vk.com/video_ext.php?'}
 ];
