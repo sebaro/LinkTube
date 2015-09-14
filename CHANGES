@@ -3,6 +3,9 @@
 /* LinkTube Changelog */
 
 
+#2015.09.14
+- adds support for Twitch
+
 #2015.07.30
 - add license metadata
 
@@ -10,7 +13,7 @@
 - change update URL
 
 #2014.06.22
-Adds support vor VK embedded videos with iframe.
+Adds support for VK embedded videos with iframe.
 
 #2014.03.21
 Adds support for videos embedded with Embed.

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name		LinkTube
-// @version		2015.07.30
+// @version		2015.09.14
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
 // @namespace		http://isebaro.com/linktube
@@ -138,7 +138,7 @@ function embedMyLinks (element) {
       params = getMyElement (child, 'children', 'param');
       for (var p = 0; p < params.length; p++) {
 	name = getMyElement (params[p], 'name', '');
-	if (name == 'movie' || name == 'src') {
+	if (name == 'movie' || name == 'src' || name == 'flashvars') {
 	  video = getMyElement (params[p], 'value', '');
 	  if (!video) video = getMyElement (params[p], 'source', '');
 	}
@@ -197,7 +197,8 @@ var linkParsers = [
   {'source': 'metacafe.com/fplayer/', 'pattern': '/fplayer/(.*?)/', 'link': 'https://metacafe.com/watch/'},
   {'source': 'funnyordie.com/embed/', 'pattern': '/embed/(.*?)$', 'link': 'https://funnyordie.com/videos/'},
   {'source': 'blip.tv/play/', 'pattern': '/play/(.*?)$', 'link': 'https://blip.tv/players/episode/'},
-  {'source': 'vk.com/video', 'pattern': 'video_ext.php\\?(.*?)$', 'link': 'http://vk.com/video_ext.php?'}
+  {'source': 'vk.com/video', 'pattern': 'video_ext.php\\?(.*?)$', 'link': 'http://vk.com/video_ext.php?'},
+  {'source': 'hostname=www.twitch.tv', 'pattern': 'channel=(.*?)(&|$)', 'link': 'http://www.twitch.tv/'}
 ];
 
 /* IFrame */
