@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name		LinkTube
-// @version		2015.09.14
+// @version		2015.12.28
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
 // @namespace		http://isebaro.com/linktube
@@ -160,7 +160,12 @@ function embedMyLinks (element) {
       myLinkWindow[element][e] = createMyElement ('div', '');
       appendMyElement (myLinkWindow[element][e], myScriptLogo[element][e]);
       appendMyElement (myLinkWindow[element][e], myScriptMess[element][e]);
-      styleMyElement (myLinkWindow[element][e], {width: '100%', height: '100%', backgroundColor: '#F4F4F4'});
+      var childStyles = child.getAttribute('style');
+      if (childStyles) {
+	myLinkWindow[element][e].setAttribute('style', childStyles);
+	styleMyElement (myLinkWindow[element][e], {backgroundColor: '#F4F4F4'});
+      }
+      else styleMyElement (myLinkWindow[element][e], {width: '100%', height: '100%', backgroundColor: '#F4F4F4'});
       replaceMyElement(parent, myLinkWindow[element][e], child);
       videoID = video.match(linkParsers[linkID]['pattern']);
       videoID = (videoID) ? videoID[1] : null;

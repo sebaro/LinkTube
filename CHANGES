@@ -3,6 +3,9 @@
 /* LinkTube Changelog */
 
 
+#2015.12.28
+- uses embedded element styles when available
+
 #2015.09.14
 - adds support for Twitch
 
