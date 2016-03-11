@@ -3,6 +3,9 @@
 /* LinkTube Changelog */
 
 
+#2016.03.11
+- fixes embeded element size
+
 #2015.12.28
 - uses embedded element styles when available
 
