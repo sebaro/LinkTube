@@ -1,10 +1,10 @@
 ﻿[{
-	"author": "Sebaro"
+	"author": "Sebaro (script) & A.S. (MX port)"
 	"website": "http://isebaro.com/linktube/" 
 	"date": "14.03.2016"
 	"type":"extension",
 		"frameworkVersion":"1.0.0",
-		"version":"2016.03.14.0",
+		"version":"2016.03.14.1",
         "guid": "{B0E19D1E-C3C4-4094-916A-95E7A4D71F41}",
 	"name": "LinkTube"
 	"icon": "icon",
@@ -41,13 +41,13 @@
 				"icon": "point.png",
 				"main": "http://isebaro.com/linktube/?ln=en"
 				},
-			{"type": "separator"},
 				{
 				"type": "page",
 				"title": {"_t": "app.Changelog"},
 				"icon": "point.png",
 				"main": "http://isebaro.com/linktube/include/files/changelog"
 				},
+			{"type": "separator"},
 				{
 				"type": "page",
 				"title": {"_t": "app.Script"},
@@ -75,10 +75,17 @@
 			{"type": "separator"},
 				{
 				"type": "page",
-				"title": {"_t": "app.AD"},
+				"title": {"_t": "app.ScriptDev"},
+				"icon": "point.png",
+				"main": "http://isebaro.com/?ln=en"
+				},
+				{
+				"type": "page",
+				"title": {"_t": "app.AddonDev"},
 				"icon": "point.png",
 				"main": "http://semenov-sherin.blogspot.com/"
 				},
+			{"type": "separator"},
 				{
 				"type": "page",
 				"title": {"_t": "app.Rate"},
