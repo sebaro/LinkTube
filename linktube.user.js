@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name		LinkTube
-// @version		2016.05.31
+// @version		2016.08.26
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
 // @namespace		http://isebaro.com/linktube
@@ -155,7 +155,7 @@ function embedMyLinks (element) {
     }
     if (foundSite) {
       myScriptLogo[element][e] = createMyElement ('div', userscript);
-      styleMyElement (myScriptLogo[element][e], {margin: '0px auto', padding: '10px', color: '#666666', fontSize: '24px', textAlign: 'center', textShadow: '#FFFFFF -1px -1px 2px'});
+      styleMyElement (myScriptLogo[element][e], {margin: '0px auto', padding: '10px', color: '#666666', fontSize: '20px', textAlign: 'center', textShadow: '#FFFFFF -1px -1px 2px'});
       myScriptMess[element][e] = createMyElement ('div', '');
       myLinkWindow[element][e] = createMyElement ('div', '');
       appendMyElement (myLinkWindow[element][e], myScriptLogo[element][e]);
@@ -174,11 +174,11 @@ function embedMyLinks (element) {
 	videoURL = linkParsers[linkID]['link'] + videoID;
 	if (!option['secure']) videoURL = videoURL.replace(/^https/, 'http');
 	videoLink = '<a href="' + videoURL + '">' + videoURL + '</a>';
-	styleMyElement (myScriptMess[element][e], {border: '1px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center'});
+	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center', fontSize: '16px'});
 	modifyMyElement (myScriptMess[element][e], 'div', videoLink, false);
       }
       else {
-	styleMyElement (myScriptMess[element][e], {border: '1px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center'});
+	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center', fontSize: '16px'});
 	modifyMyElement (myScriptMess[element][e], 'div', warning, false);
       }
     }

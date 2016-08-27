@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name		LinkTube
-// @version		2016.05.31
+// @version		2016.08.26
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
 // @namespace		http://isebaro.com/linktube
@@ -227,7 +227,12 @@ function YouTube (url, target) {
       if (ytVideoCode) {
 	myVideoCode = ytVideoFormats[ytVideoCode];
 	if (myVideoCode) {
-	  ytVideo = ytVideos[i].replace (/url=/, '').replace(/&$/, '').replace(/&itag=\d{1,3}/, '');
+	  ytVideo = cleanMyContent(ytVideos[i], true);
+	  ytVideo = ytVideo.replace(/url=/, '').replace(/&$/, '');
+	  if (ytVideo.match(/itag=/) && ytVideo.match(/itag=/g).length > 1) {
+	    if (ytVideo.match(/itag=\d{1,3}&/)) ytVideo = ytVideo.replace(/itag=\d{1,3}&/, '');
+	    else if (ytVideo.match(/&itag=\d{1,3}/)) ytVideo = ytVideo.replace(/&itag=\d{1,3}/, '');
+	  }
 	  if (ytVideo.match(/type=(video|audio).*?&/)) ytVideo = ytVideo.replace(/type=(video|audio).*?&/, '');
 	  else ytVideo = ytVideo.replace(/&type=(video|audio).*$/, '');
 	  if (ytVideo.match(/&sig=/)) ytVideo = ytVideo.replace (/&sig=/, '&signature=');
@@ -311,7 +316,7 @@ function YouTube (url, target) {
 
 	/* Get Videos */
 	if (ytVideosContent) {
-	  if (ytVideosContent.match(/&s=/) || ytVideosContent.match(/,s=/)) {
+	  if (ytVideosContent.match(/&s=/) || ytVideosContent.match(/,s=/) || ytVideosContent.match(/u0026s=/)) {
 	    var ytScriptURL = ytPageSource.match(/"js":\s*"(.*?)"/);
 	    ytScriptURL = (ytScriptURL) ? ytScriptURL[1] : null;
 	    if (ytScriptURL) {
@@ -325,29 +330,36 @@ function YouTube (url, target) {
 		    if (ytScriptSrc) {
 		      ytDecryptFunction();
 		      ytVideos();
-		      ytVideoList = '<a href="' + url + '">' + url + '</a><br>' + ytVideoList;
+		      ytVideoList = ytVideoTitle + ' (' + ytVideoLength + ')<br>' + '<a href="' + url + '">' + url + '</a><br>' + ytVideoList;
 		      modifyMyElement (target, 'div', ytVideoList, false);
 		    }
 		    else {
-		      ytVideos();
+		      ytVideoList = ytVideoTitle + ' (' + ytVideoLength + ')<br>' + '<a href="' + url + '">' + url + '</a><br>ERROR: No script!';
+		      modifyMyElement (target, 'div', ytVideoList, false);
 		    }
 		  }
 		  else {
-		    ytVideos();
+		    ytVideoList = ytVideoTitle + ' (' + ytVideoLength + ')<br>' + '<a href="' + url + '">' + url + '</a><br>ERROR: No script response!';
+		    modifyMyElement (target, 'div', ytVideoList, false);
 		  }
 		}
 	      });
 	    }
 	    else {
-	      ytVideos();
+	      ytVideoList = ytVideoTitle + ' (' + ytVideoLength + ')<br>' + '<a href="' + url + '">' + url + '</a><br>ERROR: No script!';
+	      modifyMyElement (target, 'div', ytVideoList, false);
 	    }
 	  }
 	  else {
 	    ytVideos();
+	    ytVideoList = ytVideoTitle + ' (' + ytVideoLength + ')<br>' + '<a href="' + url + '">' + url + '</a><br>' + ytVideoList;
+	    modifyMyElement (target, 'div', ytVideoList, false);
 	  }
 	}
-	ytVideoList = ytVideoTitle + ' (' + ytVideoLength + ')<br>' + '<a href="' + url + '">' + url + '</a><br>' + ytVideoList;
-	modifyMyElement (target, 'div', ytVideoList, false);
+	else {
+	  ytVideoList = ytVideoTitle + ' (' + ytVideoLength + ')<br>' + '<a href="' + url + '">' + url + '</a><br>ERROR: No videos content!';
+	  modifyMyElement (target, 'div', ytVideoList, false);
+	}
       }
       else {
 	ytVideoList = ytVideoTitle + ' (' + ytVideoLength + ')<br>' + '<a href="' + url + '">' + url + '</a><br>ERROR: No videos!';
@@ -399,7 +411,7 @@ function embedMyLinks (element) {
     }
     if (foundSite) {
       myScriptLogo[element][e] = createMyElement ('div', userscript);
-      styleMyElement (myScriptLogo[element][e], {margin: '0px auto', padding: '10px', color: '#666666', fontSize: '24px', textAlign: 'center', textShadow: '#FFFFFF -1px -1px 2px'});
+      styleMyElement (myScriptLogo[element][e], {margin: '0px auto', padding: '10px', color: '#666666', fontSize: '20px', textAlign: 'center', textShadow: '#FFFFFF -1px -1px 2px'});
       myScriptMess[element][e] = createMyElement ('div', '');
       myLinkWindow[element][e] = createMyElement ('div', '');
       appendMyElement (myLinkWindow[element][e], myScriptLogo[element][e]);
@@ -417,7 +429,7 @@ function embedMyLinks (element) {
       if (videoID) {
 	videoURL = linkParsers[linkID]['link'] + videoID;
 	if (!option['secure']) videoURL = videoURL.replace(/^https/, 'http');
-	styleMyElement (myScriptMess[element][e], {border: '1px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center'});
+	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center', fontSize: '16px'});
 	if (videoURL.indexOf('youtube.com') != -1) {
 	  YouTube(videoURL, myScriptMess[element][e]);
 	}
@@ -427,7 +439,7 @@ function embedMyLinks (element) {
 	}
       }
       else {
-	styleMyElement (myScriptMess[element][e], {border: '1px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center'});
+	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center', fontSize: '16px'});
 	modifyMyElement (myScriptMess[element][e], 'div', warning, false);
       }
     }
