@@ -1,10 +1,10 @@
 ﻿[{
 	"author": "Sebaro (script) & A.S. (MX port)"
 	"website": "http://isebaro.com/linktube/" 
-	"date": "31.05.2016"
+	"date": "26.08.2016"
 	"type":"extension",
-		"frameworkVersion":"1.0.0",
-		"version":"2016.05.31.0",
+	"frameworkVersion":"1.0.0",
+	"version":"2016.08.26.1",
         "guid": "{B0E19D1E-C3C4-4094-916A-95E7A4D71F41}",
 	"name": "LinkTube"
 	"icon": "icon",
@@ -39,32 +39,32 @@
 				"type": "page",
 				"title": {"_t": "app.About"},
 				"icon": "point.png",
-				"main": "http://isebaro.com/linktube/?ln=en"
+				"main": "http://isebaro.com/linktube/"
 				},
 				{
 				"type": "page",
-				"title": {"_t": "app.Changelog"},
+				"title": {"_t": "app.GitHub"},
 				"icon": "point.png",
-				"main": "http://isebaro.com/linktube/include/files/changelog"
+				"main": "https://github.com/sebaro/LinkTube"
 				},
 			{"type": "separator"},
 				{
 				"type": "page",
 				"title": {"_t": "app.Script"},
 				"icon": "point.png",
-				"main": "http://isebaro.com/linktube/include/files/linktube.user.js"
+				"main": "https://github.com/sebaro/LinkTube/raw/master/linktube.user.js"
 				},
 				{
 				"type": "page",
 				"title": {"_t": "app.Plus"},
 				"icon": "point.png",
-				"main": "http://isebaro.com/linktube/include/files/linktubeplus.user.js"
+				"main": "https://github.com/sebaro/LinkTube/raw/master/linktubeplus.user.js"
 				},
 				{
 				"type": "page",
 				"title": {"_t": "app.PlusPlus"},
 				"icon": "point.png",
-				"main": "http://isebaro.com/linktube/include/files/linktubeplusplus.user.js"
+				"main": "https://github.com/sebaro/LinkTube/raw/master/linktubeplusplus.user.js"
 				},
 				{
 				"type": "page",
@@ -77,13 +77,13 @@
 				"type": "page",
 				"title": {"_t": "app.ScriptDev"},
 				"icon": "point.png",
-				"main": "http://isebaro.com/?ln=en"
+				"main": "http://isebaro.com/"
 				},
 				{
 				"type": "page",
 				"title": {"_t": "app.AddonDev"},
 				"icon": "point.png",
-				"main": "http://semenov-sherin.blogspot.com/"
+				"main": "https://semenov-sherin.blogspot.com/"
 				},
 			{"type": "separator"},
 				{
@@ -96,5 +96,5 @@
 		}
 		}]
 
-	"config": "http://isebaro.com/linktube/?ln=en",
+	"config": "http://isebaro.com/linktube/",
 }]
