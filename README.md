@@ -5,7 +5,7 @@ LinkTube: video link
 LinkTube+: + video title for YouTube  
 LinkTube++: + video streams for YouTube  
 
-![](https://raw.github.com/sebaro/LinkTube/master/screenshot.png)
+![](https://raw.github.com/sebaro/LinkTube/master/Images/screenshot.png)
 
 ### Installation
 

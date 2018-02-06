@@ -3,6 +3,9 @@
 /* LinkTube Changelog */
 
 
+#2018.02.06
+- fixed for page content change without reloading
+
 #2017.11.23
 - fixed for Greasemonkey 4
 

@@ -1,21 +1,20 @@
 // ==UserScript==
 // @name		LinkTube
-// @version		2017.11.23
+// @version		2018.02.06
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
-// @namespace		http://isebaro.com/linktube
+// @namespace		http://sebaro.pro/linktube
 // @license		GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
 // @downloadURL		https://raw.githubusercontent.com/sebaro/linktube/master/linktube.user.js
 // @updateURL		https://raw.githubusercontent.com/sebaro/linktube/master/linktube.user.js
 // @icon		https://raw.githubusercontent.com/sebaro/linktube/master/linktube.png
 // @include		*
-// @grant		none
 // ==/UserScript==
 
 
 /*
 
-  Copyright (C) 2011 - 2017 Sebastian Luncan
+  Copyright (C) 2011 - 2018 Sebastian Luncan
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,8 +29,8 @@
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-  Website: http://isebaro.com/linktube
-  Contact: http://isebaro.com/contact
+  Website: http://sebaro.pro/linktube
+  Contact: http://sebaro.pro/contact
 
 */
 
@@ -44,8 +43,11 @@
 // Userscript
 var userscript = 'LinkTube';
 
+// Page
+var page = {win: window, doc: window.document, url: window.location.href};
+
 // Contact
-var contact = 'http://isebaro.com/contact';
+var contact = 'http://sebaro.pro/contact';
 
 // Warning
 var warning = 'Couldn\'t get the video link. Please report it <a href="' + contact + '">here</a>.';
@@ -207,17 +209,38 @@ var linkParsers = [
   {'source': 'hostname=www.twitch.tv', 'pattern': 'channel=(.*?)(&|$)', 'link': 'http://www.twitch.tv/'}
 ];
 
-/* IFrame */
-var iframeElements = getMyElement (document, 'children', 'iframe');
-if (iframeElements.length > 0 ) embedMyLinks ('iframe');
+var iframeElements;
+var objectElements;
+var embedElements;
 
-/* Object */
-var objectElements = getMyElement (document, 'children', 'object');
-if (objectElements.length > 0 ) embedMyLinks ('object');
+function LinkTube() {
 
-/* Embed */
-var embedElements = getMyElement (document, 'children', 'embed');
-if (embedElements.length > 0 ) embedMyLinks ('embed');
+  /* IFrame */
+  iframeElements = getMyElement (document, 'children', 'iframe');
+  if (iframeElements.length > 0 ) embedMyLinks ('iframe');
+
+  /* Object */
+  objectElements = getMyElement (document, 'children', 'object');
+  if (objectElements.length > 0 ) embedMyLinks ('object');
+
+  /* Embed */
+  embedElements = getMyElement (document, 'children', 'embed');
+  if (embedElements.length > 0 ) embedMyLinks ('embed');
+
+}
+
+
+// ==========Run========== //
+
+LinkTube();
+
+page.win.setInterval(function() {
+  if (page.url != page.win.location.href) {
+    page.doc = page.win.document;
+    page.url = page.win.location.href;
+    LinkTube();
+  }
+}, 500);
 
 
 })();
