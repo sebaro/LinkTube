@@ -1,21 +1,20 @@
 ﻿// ==UserScript==
 // @name		LinkTube
-// @version		2016.08.26
+// @version		2018.02.06
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
-// @namespace		http://isebaro.com/linktube
+// @namespace		http://sebaro.pro/linktube
 // @license		GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
 // @downloadURL		https://raw.githubusercontent.com/sebaro/linktube/master/linktube.user.js
 // @updateURL		https://raw.githubusercontent.com/sebaro/linktube/master/linktube.user.js
 // @icon		https://raw.githubusercontent.com/sebaro/linktube/master/linktube.png
 // @include		*
-// @grant		none
 // ==/UserScript==
 
 
 /*
 
-  Copyright (C) 2011 - 2016 Sebastian Luncan
+  Copyright (C) 2011 - 2018 Sebastian Luncan
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,8 +29,8 @@
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-  Website: http://isebaro.com/linktube
-  Contact: http://isebaro.com/contact
+  Website: http://sebaro.pro/linktube
+  Contact: http://sebaro.pro/contact
 
 */
 
@@ -44,8 +43,11 @@
 // Userscript
 var userscript = 'LinkTube';
 
+// Page
+var page = {win: window, doc: window.document, url: window.location.href};
+
 // Contact
-var contact = 'http://isebaro.com/contact/?ln=en&sb=linktube';
+var contact = 'http://sebaro.pro/contact';
 
 // Warning
 var warning = 'Couldn\'t get the video link. Please report it <a href="' + contact + '">here</a>.';
@@ -155,13 +157,14 @@ function embedMyLinks (element) {
     }
     if (foundSite) {
       myScriptLogo[element][e] = createMyElement ('div', userscript);
-      styleMyElement (myScriptLogo[element][e], {margin: '0px auto', padding: '10px', color: '#666666', fontSize: '20px', textAlign: 'center', textShadow: '#FFFFFF -1px -1px 2px'});
+      styleMyElement (myScriptLogo[element][e], {margin: '0px auto', padding: '10px', color: '#FFFFFF', fontSize: '20px', textAlign: 'center', textShadow: '#000000 -1px 1px 1px'});
       myScriptMess[element][e] = createMyElement ('div', '');
       myLinkWindow[element][e] = createMyElement ('div', '');
       appendMyElement (myLinkWindow[element][e], myScriptLogo[element][e]);
       appendMyElement (myLinkWindow[element][e], myScriptMess[element][e]);
       var childStyles = child.getAttribute('style');
       if (childStyles) {
+	childStyles = childStyles.replace('absolute', 'relative');
 	myLinkWindow[element][e].setAttribute('style', childStyles);
 	styleMyElement (myLinkWindow[element][e], {backgroundColor: '#F4F4F4'});
       }
@@ -174,11 +177,11 @@ function embedMyLinks (element) {
 	videoURL = linkParsers[linkID]['link'] + videoID;
 	if (!option['secure']) videoURL = videoURL.replace(/^https/, 'http');
 	videoLink = '<a href="' + videoURL + '">' + videoURL + '</a>';
-	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center', fontSize: '16px'});
+	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '0px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center', fontSize: '16px'});
 	modifyMyElement (myScriptMess[element][e], 'div', videoLink, false);
       }
       else {
-	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '5px auto 5px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center', fontSize: '16px'});
+	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '0px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center', fontSize: '16px'});
 	modifyMyElement (myScriptMess[element][e], 'div', warning, false);
       }
     }
@@ -191,33 +194,53 @@ function embedMyLinks (element) {
 
 /* Parsers */
 var linkParsers = [
-  {'source': 'youtube(.com|-nocookie.com)/embed/(videoseries|\\?list)', 'pattern': 'list=(.*?)(&|$)', 'link': 'https://youtube.com/playlist?list='},
-  {'source': 'youtube(.com|-nocookie.com)/embed/', 'pattern': '/embed/(.*?)(\\?|&|$)', 'link': 'https://youtube.com/watch?v='},
-  {'source': 'youtube(.com|-nocookie.com)/v/', 'pattern': '/v/(.*?)(\\?|&|$)', 'link': 'https://youtube.com/watch?v='},
-  {'source': 'dailymotion.com/embed/', 'pattern': '/video/(.*?)$', 'link': 'https://dailymotion.com/video/'},
-  {'source': 'dailymotion.com/swf/(?!video)', 'pattern': '/swf/(.*?)$', 'link': 'https://dailymotion.com/video/'},
-  {'source': 'dailymotion.com/swf/(?=video)', 'pattern': '/video/(.*?)$', 'link': 'https://dailymotion.com/video/'},
+  {'source': 'youtube(.com|-nocookie.com)/embed/(videoseries|\\?list)', 'pattern': 'list=(.*?)(&|$)', 'link': 'https://www.youtube.com/playlist?list='},
+  {'source': 'youtube(.com|-nocookie.com)/embed/', 'pattern': '/embed/(.*?)(\\?|&|$)', 'link': 'https://www.youtube.com/watch?v='},
+  {'source': 'youtube(.com|-nocookie.com)/v/', 'pattern': '/v/(.*?)(\\?|&|$)', 'link': 'https://www.youtube.com/watch?v='},
+  {'source': 'dailymotion.com/embed/', 'pattern': '/video/(.*?)$', 'link': 'https://www.dailymotion.com/video/'},
+  {'source': 'dailymotion.com/swf/(?!video)', 'pattern': '/swf/(.*?)$', 'link': 'https://www.dailymotion.com/video/'},
+  {'source': 'dailymotion.com/swf/(?=video)', 'pattern': '/video/(.*?)$', 'link': 'https://www.dailymotion.com/video/'},
   {'source': 'vimeo.com/video/', 'pattern': '/video/(.*?)(\\?|&|$)', 'link': 'https://vimeo.com/'},
   {'source': 'vimeo.com/moogaloop', 'pattern': '/moogaloop.swf\\?clip_id=(.*?)(&|$)', 'link': 'https://vimeo.com/'},
-  {'source': 'metacafe.com/embed/', 'pattern': '/embed/(.*?)/', 'link': 'https://metacafe.com/watch/'},
-  {'source': 'metacafe.com/fplayer/', 'pattern': '/fplayer/(.*?)/', 'link': 'https://metacafe.com/watch/'},
-  {'source': 'funnyordie.com/embed/', 'pattern': '/embed/(.*?)$', 'link': 'https://funnyordie.com/videos/'},
-  {'source': 'blip.tv/play/', 'pattern': '/play/(.*?)$', 'link': 'https://blip.tv/players/episode/'},
+  {'source': 'metacafe.com/embed/', 'pattern': '/embed/(.*?)/', 'link': 'https://www.metacafe.com/watch/'},
+  {'source': 'metacafe.com/fplayer/', 'pattern': '/fplayer/(.*?)/', 'link': 'https://www.metacafe.com/watch/'},
+  {'source': 'funnyordie.com/embed/', 'pattern': '/embed/(.*?)$', 'link': 'https://www.funnyordie.com/videos/'},
   {'source': 'vk.com/video', 'pattern': 'video_ext.php\\?(.*?)$', 'link': 'http://vk.com/video_ext.php?'},
   {'source': 'hostname=www.twitch.tv', 'pattern': 'channel=(.*?)(&|$)', 'link': 'http://www.twitch.tv/'}
 ];
 
-/* IFrame */
-var iframeElements = getMyElement (document, 'children', 'iframe');
-if (iframeElements.length > 0 ) embedMyLinks ('iframe');
+var iframeElements;
+var objectElements;
+var embedElements;
 
-/* Object */
-var objectElements = getMyElement (document, 'children', 'object');
-if (objectElements.length > 0 ) embedMyLinks ('object');
+function LinkTube() {
 
-/* Embed */
-var embedElements = getMyElement (document, 'children', 'embed');
-if (embedElements.length > 0 ) embedMyLinks ('embed');
+  /* IFrame */
+  iframeElements = getMyElement (document, 'children', 'iframe');
+  if (iframeElements.length > 0 ) embedMyLinks ('iframe');
+
+  /* Object */
+  objectElements = getMyElement (document, 'children', 'object');
+  if (objectElements.length > 0 ) embedMyLinks ('object');
+
+  /* Embed */
+  embedElements = getMyElement (document, 'children', 'embed');
+  if (embedElements.length > 0 ) embedMyLinks ('embed');
+
+}
+
+
+// ==========Run========== //
+
+LinkTube();
+
+page.win.setInterval(function() {
+  if (page.url != page.win.location.href) {
+    page.doc = page.win.document;
+    page.url = page.win.location.href;
+    LinkTube();
+  }
+}, 500);
 
 
 })();

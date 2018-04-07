@@ -1,14 +1,15 @@
 ﻿[{
 	"author": "Sebaro (script) & A.S. (MX port)"
 	"website": "http://isebaro.com/linktube/" 
-	"date": "26.08.2016"
+	"date": "06.02.2018"
 	"type":"extension",
 	"frameworkVersion":"1.0.0",
-	"version":"2016.08.26.1",
+	"version":"2018.02.06.0",
         "guid": "{B0E19D1E-C3C4-4094-916A-95E7A4D71F41}",
 	"name": "LinkTube"
 	"icon": "icon",
-	"title": {"_t": "app.LinkTube"}
+	"title": {"_t": "app.LinkTube"},
+	"description": {"_t": "app.Description"},
 
 	"actions": [{
 		"type": "script", 
@@ -31,7 +32,8 @@
 	"actions": [{
 		"type": "mxcmd",
 		"title": {"_t": "app.LinkTube"},
-		"entryPoints": ["toolbar"],        
+		"entryPoints": ["toolbar"],
+		"icon": "icon_16.png",        
 		{"type": "script",
 			"js": ["page.js"]
 			"menu": [
@@ -41,30 +43,24 @@
 				"icon": "point.png",
 				"main": "http://isebaro.com/linktube/"
 				},
-				{
-				"type": "page",
-				"title": {"_t": "app.GitHub"},
-				"icon": "point.png",
-				"main": "https://github.com/sebaro/LinkTube"
-				},
 			{"type": "separator"},
 				{
 				"type": "page",
 				"title": {"_t": "app.Script"},
 				"icon": "point.png",
-				"main": "https://github.com/sebaro/LinkTube/raw/master/linktube.user.js"
+				"main": "http://isebaro.com/linktube/linktube.user.js"
 				},
 				{
 				"type": "page",
 				"title": {"_t": "app.Plus"},
 				"icon": "point.png",
-				"main": "https://github.com/sebaro/LinkTube/raw/master/linktubeplus.user.js"
+				"main": "http://isebaro.com/linktube/linktubeplus.user.js"
 				},
 				{
 				"type": "page",
 				"title": {"_t": "app.PlusPlus"},
 				"icon": "point.png",
-				"main": "https://github.com/sebaro/LinkTube/raw/master/linktubeplusplus.user.js"
+				"main": "http://isebaro.com/linktube/linktubeplusplus.user.js"
 				},
 				{
 				"type": "page",
@@ -75,22 +71,15 @@
 			{"type": "separator"},
 				{
 				"type": "page",
-				"title": {"_t": "app.ScriptDev"},
+				"title": {"_t": "app.GitHub"},
+				"icon": "point.png",
+				"main": "https://github.com/sebaro/LinkTube"
+				},
+				{
+				"type": "page",
+				"title": {"_t": "app.Developer"},
 				"icon": "point.png",
 				"main": "http://isebaro.com/"
-				},
-				{
-				"type": "page",
-				"title": {"_t": "app.AddonDev"},
-				"icon": "point.png",
-				"main": "https://semenov-sherin.blogspot.com/"
-				},
-			{"type": "separator"},
-				{
-				"type": "page",
-				"title": {"_t": "app.Rate"},
-				"icon": "point.png",
-				"main": "http://extension.maxthon.com/server/go.php?guid={B0E19D1E-C3C4-4094-916A-95E7A4D71F41}"
 				}
 				]
 		}
