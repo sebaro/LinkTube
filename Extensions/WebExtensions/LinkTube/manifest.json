@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "LinkTube",
-  "version": "2018.2.6",
+  "version": "2018.6.7",
 
   "description": "Replaces an embedded video with a link to the video page.",
 

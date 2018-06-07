@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name		LinkTube
-// @version		2018.02.06
+// @version		2018.06.07
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
 // @namespace		http://sebaro.pro/linktube
 // @license		GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
-// @downloadURL		https://raw.githubusercontent.com/sebaro/linktube/master/linktube.user.js
-// @updateURL		https://raw.githubusercontent.com/sebaro/linktube/master/linktube.user.js
-// @icon		https://raw.githubusercontent.com/sebaro/linktube/master/linktube.png
+// @downloadURL		https://gitlab.com/sebaro/linktube/raw/master/linktube.user.js
+// @updateURL		https://gitlab.com/sebaro/linktube/raw/master/linktube.user.js
+// @icon		https://gitlab.com/sebaro/linktube/raw/master/linktube.png
 // @include		*
 // ==/UserScript==
 

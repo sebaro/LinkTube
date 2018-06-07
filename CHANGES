@@ -3,6 +3,9 @@
 /* LinkTube Changelog */
 
 
+#2018.06.07
+- move source from GitHub to GitLab
+
 #2018.02.06
 - fixed for page content change without reloading
 
