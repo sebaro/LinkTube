@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name		LinkTube
-// @version		2018.06.07
+// @version		2019.11.21
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
 // @namespace		http://sebaro.pro/linktube
-// @license		GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
+// @license		GPL-3.0-or-later
 // @downloadURL		https://gitlab.com/sebaro/linktube/raw/master/linktube.user.js
 // @updateURL		https://gitlab.com/sebaro/linktube/raw/master/linktube.user.js
 // @icon		https://gitlab.com/sebaro/linktube/raw/master/linktube.png
@@ -14,7 +14,7 @@
 
 /*
 
-  Copyright (C) 2011 - 2018 Sebastian Luncan
+  Copyright (C) 2011 - 2019 Sebastian Luncan
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ if (window.top != window.self)  return;
 
 // ==========Functions========== //
 
-function createMyElement (type, content) {
+function createMyElement(type, content) {
   var obj = document.createElement(type);
   if (type == 'div') {
     if (content) obj.innerHTML = content;
@@ -72,17 +72,17 @@ function createMyElement (type, content) {
   return obj;
 }
 
-function getMyElement (element, get, tag) {
+function getMyElement(element, get, tag) {
   var obj;
   if (get == 'parent') obj = element.parentNode;
-  else if (get == 'source') obj = element.src;
+  else if (get == 'source') obj = element.src || element.getAttribute('data-embed-src');
   else if (get == 'name') obj = element.name;
   else if (get == 'value') obj = element.value;
   else if (get == 'children') obj = element.getElementsByTagName(tag);
   return obj;
 }
 
-function modifyMyElement (obj, type, content, clear) {
+function modifyMyElement(obj, type, content, clear) {
   if (type == 'div') {
     if (content) obj.innerHTML = content;
   }
@@ -95,27 +95,27 @@ function modifyMyElement (obj, type, content, clear) {
   }
 }
 
-function styleMyElement (obj, styles) {
+function styleMyElement(obj, styles) {
   for (var property in styles) {
     if (styles.hasOwnProperty(property)) obj.style[property] = styles[property];
   }
 }
 
-function appendMyElement (parent, child) {
+function appendMyElement(parent, child) {
   if (parent == 'body') document.body.appendChild(child);
   else parent.appendChild(child);
 }
 
-function removeMyElement (parent, child) {
+function removeMyElement(parent, child) {
   if (parent == 'body') document.body.removeChild(child);
   else parent.removeChild(child);
 }
 
-function replaceMyElement (parent, orphan, child) {
+function replaceMyElement(parent, orphan, child) {
   parent.replaceChild(orphan, child);
 }
 
-function embedMyLinks (element) {
+function embedMyLinks(element) {
   var elements;
   if (element == 'iframe') elements = iframeElements;
   else if (element == 'object') elements = objectElements;
@@ -132,17 +132,17 @@ function embedMyLinks (element) {
   for (var e = elements.length - 1; e >= 0; e--) {
     foundSite = false;
     child = elements[e];
-    parent = getMyElement (child, 'parent', '');
+    parent = getMyElement(child, 'parent', '');
     if (element == 'iframe' || element == 'embed') {
-      video = getMyElement (child, 'source', '');
+      video = getMyElement(child, 'source', '');
     }
     else if (element == 'object') {
-      params = getMyElement (child, 'children', 'param');
+      params = getMyElement(child, 'children', 'param');
       for (var p = 0; p < params.length; p++) {
-	name = getMyElement (params[p], 'name', '');
+	name = getMyElement(params[p], 'name', '');
 	if (name == 'movie' || name == 'src' || name == 'flashvars') {
-	  video = getMyElement (params[p], 'value', '');
-	  if (!video) video = getMyElement (params[p], 'source', '');
+	  video = getMyElement(params[p], 'value', '');
+	  if (!video) video = getMyElement(params[p], 'source', '');
 	}
       }
     }
@@ -156,20 +156,20 @@ function embedMyLinks (element) {
       }
     }
     if (foundSite) {
-      myScriptLogo[element][e] = createMyElement ('div', userscript);
-      styleMyElement (myScriptLogo[element][e], {margin: '0px auto', padding: '10px', color: '#FFFFFF', fontSize: '20px', textAlign: 'center', textShadow: '#000000 -1px 1px 1px'});
-      myScriptMess[element][e] = createMyElement ('div', '');
-      myLinkWindow[element][e] = createMyElement ('div', '');
-      appendMyElement (myLinkWindow[element][e], myScriptLogo[element][e]);
-      appendMyElement (myLinkWindow[element][e], myScriptMess[element][e]);
+      myScriptLogo[element][e] = createMyElement('div', userscript);
+      styleMyElement(myScriptLogo[element][e], {margin: '0px auto', padding: '10px', color: '#FFFFFF', fontSize: '20px', textAlign: 'center', textShadow: '#000000 -1px 1px 1px'});
+      myScriptMess[element][e] = createMyElement('div', '');
+      myLinkWindow[element][e] = createMyElement('div', '');
+      appendMyElement(myLinkWindow[element][e], myScriptLogo[element][e]);
+      appendMyElement(myLinkWindow[element][e], myScriptMess[element][e]);
       var childStyles = child.getAttribute('style');
       if (childStyles) {
 	childStyles = childStyles.replace('absolute', 'relative');
 	myLinkWindow[element][e].setAttribute('style', childStyles);
-	styleMyElement (myLinkWindow[element][e], {backgroundColor: '#F4F4F4'});
+	styleMyElement(myLinkWindow[element][e], {backgroundColor: '#F4F4F4'});
       }
-      else styleMyElement (myLinkWindow[element][e], {width: '100%', height: '100%', backgroundColor: '#F4F4F4'});
-      styleMyElement (parent, {padding: '0px', height: '100%'});
+      else styleMyElement(myLinkWindow[element][e], {width: '100%', height: '100%', backgroundColor: '#F4F4F4'});
+      styleMyElement(parent, {padding: '0px', height: '100%'});
       replaceMyElement(parent, myLinkWindow[element][e], child);
       videoID = video.match(linkParsers[linkID]['pattern']);
       videoID = (videoID) ? videoID[1] : null;
@@ -177,12 +177,12 @@ function embedMyLinks (element) {
 	videoURL = linkParsers[linkID]['link'] + videoID;
 	if (!option['secure']) videoURL = videoURL.replace(/^https/, 'http');
 	videoLink = '<a href="' + videoURL + '">' + videoURL + '</a>';
-	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '0px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center', fontSize: '16px'});
-	modifyMyElement (myScriptMess[element][e], 'div', videoLink, false);
+	styleMyElement(myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '0px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center', fontSize: '16px'});
+	modifyMyElement(myScriptMess[element][e], 'div', videoLink, false);
       }
       else {
-	styleMyElement (myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '0px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center', fontSize: '16px'});
-	modifyMyElement (myScriptMess[element][e], 'div', warning, false);
+	styleMyElement(myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '0px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center', fontSize: '16px'});
+	modifyMyElement(myScriptMess[element][e], 'div', warning, false);
       }
     }
   }
@@ -216,16 +216,16 @@ var embedElements;
 function LinkTube() {
 
   /* IFrame */
-  iframeElements = getMyElement (document, 'children', 'iframe');
-  if (iframeElements.length > 0 ) embedMyLinks ('iframe');
+  iframeElements = getMyElement(document, 'children', 'iframe');
+  if (iframeElements.length > 0 ) embedMyLinks('iframe');
 
   /* Object */
-  objectElements = getMyElement (document, 'children', 'object');
-  if (objectElements.length > 0 ) embedMyLinks ('object');
+  objectElements = getMyElement(document, 'children', 'object');
+  if (objectElements.length > 0 ) embedMyLinks('object');
 
   /* Embed */
-  embedElements = getMyElement (document, 'children', 'embed');
-  if (embedElements.length > 0 ) embedMyLinks ('embed');
+  embedElements = getMyElement(document, 'children', 'embed');
+  if (embedElements.length > 0 ) embedMyLinks('embed');
 
 }
 

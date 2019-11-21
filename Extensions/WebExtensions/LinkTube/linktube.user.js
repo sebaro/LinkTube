@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name		LinkTube
-// @version		2018.06.07
+// @version		2019.11.21
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
 // @namespace		http://sebaro.pro/linktube
-// @license		GPL version 3 or any later version; http://www.gnu.org/copyleft/gpl.html
+// @license		GPL-3.0-or-later
 // @downloadURL		https://gitlab.com/sebaro/linktube/raw/master/linktube.user.js
 // @updateURL		https://gitlab.com/sebaro/linktube/raw/master/linktube.user.js
 // @icon		https://gitlab.com/sebaro/linktube/raw/master/linktube.png
@@ -14,7 +14,7 @@
 
 /*
 
-  Copyright (C) 2011 - 2018 Sebastian Luncan
+  Copyright (C) 2011 - 2019 Sebastian Luncan
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ function createMyElement (type, content) {
 function getMyElement (element, get, tag) {
   var obj;
   if (get == 'parent') obj = element.parentNode;
-  else if (get == 'source') obj = element.src;
+  else if (get == 'source') obj = element.src || element.getAttribute('data-embed-src');
   else if (get == 'name') obj = element.name;
   else if (get == 'value') obj = element.value;
   else if (get == 'children') obj = element.getElementsByTagName(tag);

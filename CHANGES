@@ -3,6 +3,9 @@
 /* LinkTube Changelog */
 
 
+#2019.11.21
+- fixed for iframes embeded with data-embed-src attribute
+
 #2018.06.07
 - move source from GitHub to GitLab
 
