@@ -1,10 +1,9 @@
 // ==UserScript==
 // @name		LinkTube
-// @version		2019.11.21
+// @version		2019.11.25
 // @description		Replaces an embedded video with a link to the video page.
 // @author		sebaro
 // @namespace		http://sebaro.pro/linktube
-// @license		GPL-3.0-or-later
 // @downloadURL		https://gitlab.com/sebaro/linktube/raw/master/linktube.user.js
 // @updateURL		https://gitlab.com/sebaro/linktube/raw/master/linktube.user.js
 // @icon		https://gitlab.com/sebaro/linktube/raw/master/linktube.png
@@ -75,7 +74,17 @@ function createMyElement(type, content) {
 function getMyElement(element, get, tag) {
   var obj;
   if (get == 'parent') obj = element.parentNode;
-  else if (get == 'source') obj = element.src || element.getAttribute('data-embed-src');
+  else if (get == 'source') {
+    obj = element.src;
+    if (!obj) {
+      for (var i = 0; i < element.attributes.length; i++) {
+	if (element.attributes[i].name.match(/^data.*src$/)) {
+	  obj = element.attributes[i].value;
+	  break;
+	}
+      }
+    }
+  }
   else if (get == 'name') obj = element.name;
   else if (get == 'value') obj = element.value;
   else if (get == 'children') obj = element.getElementsByTagName(tag);
@@ -166,9 +175,9 @@ function embedMyLinks(element) {
       if (childStyles) {
 	childStyles = childStyles.replace('absolute', 'relative');
 	myLinkWindow[element][e].setAttribute('style', childStyles);
-	styleMyElement(myLinkWindow[element][e], {backgroundColor: '#F4F4F4'});
+	styleMyElement(myLinkWindow[element][e], {border: '3px solid #F4F4F4', backgroundColor: 'transparent'});
       }
-      else styleMyElement(myLinkWindow[element][e], {width: '100%', height: '100%', backgroundColor: '#F4F4F4'});
+      else styleMyElement(myLinkWindow[element][e], {width: '100%', height: '100%', border: '3px solid #F4F4F4', backgroundColor: 'transparent'});
       styleMyElement(parent, {padding: '0px', height: '100%'});
       replaceMyElement(parent, myLinkWindow[element][e], child);
       videoID = video.match(linkParsers[linkID]['pattern']);
@@ -176,12 +185,12 @@ function embedMyLinks(element) {
       if (videoID) {
 	videoURL = linkParsers[linkID]['link'] + videoID;
 	if (!option['secure']) videoURL = videoURL.replace(/^https/, 'http');
-	videoLink = '<a href="' + videoURL + '">' + videoURL + '</a>';
-	styleMyElement(myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '0px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center', fontSize: '16px'});
+	videoLink = '<a href="' + videoURL + '" style="color:#336699;text-decoration:none;">' + videoURL + '</a>';
+	styleMyElement(myScriptMess[element][e], {border: '1px solid #F4F4F4', margin: '5px', padding: '5px', backgroundColor: '#FFFFFF', color: '#00C000', textAlign: 'center', fontSize: '16px'});
 	modifyMyElement(myScriptMess[element][e], 'div', videoLink, false);
       }
       else {
-	styleMyElement(myScriptMess[element][e], {border: '3px solid #F4F4F4', margin: '0px auto', padding: '10px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center', fontSize: '16px'});
+	styleMyElement(myScriptMess[element][e], {border: '1px solid #F4F4F4', margin: '5px', padding: '5px', backgroundColor: '#FFFFFF', color: '#AD0000', textAlign: 'center', fontSize: '16px'});
 	modifyMyElement(myScriptMess[element][e], 'div', warning, false);
       }
     }

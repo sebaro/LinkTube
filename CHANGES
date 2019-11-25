@@ -3,6 +3,10 @@
 /* LinkTube Changelog */
 
 
+#2019.11.25
+- fixed for iframes embeded with data-*-src attributes
+- sets link color
+
 #2019.11.21
 - fixed for iframes embeded with data-embed-src attribute
 
